@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Fetch User Names</title>
+  </head>
+  <body>
+    <script>
+      function fetchUserNames() {
+        const xhr = new XMLHttpRequest();
+        xhr.open("GET", "https://jsonplaceholder.typicode.com/users", true);
+        xhr.onreadystatechange = function () {
+          if (xhr.readyState === 4) {
+            if (xhr.status === 200) {
+              const users = JSON.parse(xhr.responseText);
+              const userNames = users.map((user) => user.name);
+              console.log("User Names:", userNames);
+              document.body.innerHTML = `<h2>User Names:</h2><ul>${userNames
+                .map((name) => `<li>${name}</li>`)
+                .join("")}</ul>`;
+            } else {
+              console.error("Failed to fetch data:", xhr.status, xhr.statusText);
+            }
+          }
+        };
+        xhr.send();
+      }
+      fetchUserNames();
+    </script>
+  </body>
+</html>
